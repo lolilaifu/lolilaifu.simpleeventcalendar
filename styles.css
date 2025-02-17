@@ -1,0 +1,219 @@
+:root {
+  --primary-color: #007bff;
+  --secondary-color: #6c757d;
+  --background-color: #ffffff;
+  --text-color: #212529;
+  --border-color: #dee2e6;
+  
+  /* Category Colors */
+  --category-work: #4a90e2;
+  --category-personal: #7ed321;
+  --category-meeting: #f5a623;
+  --category-birthday: #bd10e0;
+}
+
+[data-theme="dark"] {
+  --primary-color: #1e90ff;
+  --secondary-color: #6c757d;
+  --background-color: #212529;
+  --text-color: #f8f9fa;
+  --border-color: #495057;
+  
+  /* Dark mode category colors */
+  --category-work: #2c6bb1;
+  --category-personal: #5aa700;
+  --category-meeting: #d48a00;
+  --category-birthday: #9a0db7;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.calendar-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+}
+
+.calendar-day {
+  border: 1px solid var(--border-color);
+  padding: 0.5rem;
+  min-height: 100px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.calendar-day:hover {
+  background-color: rgba(0, 123, 255, 0.1);
+}
+
+.current-day {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: var(--background-color);
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  width: 80%;
+  max-width: 500px;
+}
+
+.close {
+  color: var(--text-color);
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: var(--primary-color);
+}
+
+.theme-toggle {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+}
+
+button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.event-item {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+.event-item.work {
+  background-color: var(--category-work);
+  color: white;
+}
+
+.event-item.personal {
+  background-color: var(--category-personal);
+  color: white;
+}
+
+.event-item.meeting {
+  background-color: var(--category-meeting);
+  color: white;
+}
+
+.event-item.birthday {
+  background-color: var(--category-birthday);
+  color: white;
+}
+
+.event-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin: 2px;
+  display: inline-block;
+}
+
+.event-indicator.work {
+  background-color: var(--category-work);
+}
+
+.event-indicator.personal {
+  background-color: var(--category-personal);
+}
+
+.event-indicator.meeting {
+  background-color: var(--category-meeting);
+}
+
+.event-indicator.birthday {
+  background-color: var(--category-birthday);
+}
+
+#category-modal {
+  display: none;
+}
+
+#category-modal .modal-content {
+  max-width: 400px;
+}
+
+#category-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.category-select-container {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.delete-category-btn {
+  background-color: #dc3545;
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.delete-category-btn:hover {
+  background-color: #c82333;
+}
+
+.delete-category-btn:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .calendar-day {
+    min-height: 60px;
+    padding: 0.25rem;
+  }
+}

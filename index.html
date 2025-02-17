@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Calendar</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="calendar-container">
+    <div class="calendar-header">
+      <button id="prev-month">< Previous</button>
+      <h1 id="current-month"></h1>
+      <button id="next-month">Next ></button>
+    </div>
+    <div class="calendar-grid" id="calendar-grid">
+      <!-- Calendar days will be dynamically generated here -->
+    </div>
+  </div>
+
+  <!-- Day Events Modal -->
+  <div class="modal" id="day-events-modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2 id="day-events-title">Events</h2>
+      <div id="day-events-list"></div>
+      <button id="add-new-event">Add New Event</button>
+    </div>
+  </div>
+
+  <!-- Event Details Modal -->
+  <div class="modal" id="event-details-modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2 id="event-details-title"></h2>
+      <p id="event-details-date"></p>
+      <p id="event-details-description"></p>
+      <div class="event-actions">
+        <button id="edit-event">Edit</button>
+        <button id="delete-event">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Event Edit Modal -->
+  <div class="modal" id="event-edit-modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Edit Event</h2>
+      <form id="event-edit-form">
+        <label for="edit-event-title">Title:</label>
+        <input type="text" id="edit-event-title" required>
+        
+        <label for="edit-event-date">Date:</label>
+        <input type="date" id="edit-event-date" required>
+        
+        <label for="edit-event-category">Category:</label>
+        <select id="edit-event-category" required></select>
+        
+        <label for="edit-event-description">Description:</label>
+        <textarea id="edit-event-description"></textarea>
+        
+        <div class="form-buttons">
+          <button type="submit">Save</button>
+          <button type="button" id="cancel-edit">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- New Event Modal -->
+  <div class="modal" id="new-event-modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>New Event</h2>
+      <form id="new-event-form">
+        <label for="new-event-title">Title:</label>
+        <input type="text" id="new-event-title" required>
+        
+        <label for="new-event-date">Date:</label>
+        <input type="date" id="new-event-date" required>
+        
+        <label for="new-event-category">Category:</label>
+        <select id="new-event-category" required></select>
+        
+        <label for="new-event-description">Description:</label>
+        <textarea id="new-event-description"></textarea>
+        
+        <div class="form-buttons">
+          <button type="submit">Create</button>
+          <button type="button" id="cancel-new-event">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Category Modal -->
+  <div class="modal" id="category-modal" style="display: none;">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Add New Category</h2>
+      <form id="category-form">
+        <label for="category-name">Category Name:</label>
+        <input type="text" id="category-name" required>
+        
+        <button type="submit">Create Category</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="theme-toggle">
+    <button id="dark-mode-toggle">Toggle Dark Mode</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
