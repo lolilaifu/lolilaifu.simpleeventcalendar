@@ -1,4 +1,3 @@
-# lolilaifu.simpleeventcalendar
 # Simple Event Calendar
 
 Welcome to **Simple Event Calendar**, a clean and intuitive web-based calendar designed to help you manage your events with ease. With a minimalistic black and white theme, this calendar focuses on simplicity and functionality without any distractions.
