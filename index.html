@@ -11,10 +11,25 @@
     <div class="calendar-header">
       <button id="prev-month">< Previous</button>
       <h1 id="current-month"></h1>
-      <button id="next-month">Next ></button>
+      <div class="header-right">
+        <button id="next-month">Next ></button>
+        <button id="settings-button" class="settings-button">⚙️</button>
+      </div>
     </div>
     <div class="calendar-grid" id="calendar-grid">
       <!-- Calendar days will be dynamically generated here -->
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div class="modal" id="settings-modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Settings</h2>
+      <div class="settings-options">
+        <button id="download-data">Download Data</button>
+        <button id="upload-data">Upload Data</button>
+      </div>
     </div>
   </div>
 

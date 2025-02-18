@@ -4,13 +4,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const prevMonthButton = document.getElementById('prev-month');
   const nextMonthButton = document.getElementById('next-month');
   const darkModeToggle = document.getElementById('dark-mode-toggle');
+  const settingsButton = document.getElementById('settings-button');
   
   // Modals
+  const settingsModal = document.getElementById('settings-modal');
   const dayEventsModal = document.getElementById('day-events-modal');
   const eventDetailsModal = document.getElementById('event-details-modal');
   const eventEditModal = document.getElementById('event-edit-modal');
   const newEventModal = document.getElementById('new-event-modal');
   const categoryModal = document.getElementById('category-modal');
+  
+  // Settings Elements
+  const downloadDataButton = document.getElementById('download-data');
+  const uploadDataButton = document.getElementById('upload-data');
   
   // Event Elements
   const dayEventsList = document.getElementById('day-events-list');
@@ -34,6 +40,62 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentDay = null;
   let currentEvent = null;
 
+  // Settings functionality
+  settingsButton.addEventListener('click', () => {
+    settingsModal.style.display = 'block';
+  });
+
+  downloadDataButton.addEventListener('click', () => {
+    const data = {
+      events: JSON.parse(localStorage.getItem('calendarEvents')) || {},
+      categories: JSON.parse(localStorage.getItem('calendarCategories')) || {}
+    };
+    
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `calendar-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  uploadDataButton.addEventListener('click', () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
+    
+    input.onchange = e => {
+      const file = e.target.files[0];
+      if (!file) return;
+      
+      const reader = new FileReader();
+      reader.onload = e => {
+        try {
+          const data = JSON.parse(e.target.result);
+          if (!data.events || !data.categories) {
+            throw new Error('Invalid backup file');
+          }
+          
+          localStorage.setItem('calendarEvents', JSON.stringify(data.events));
+          localStorage.setItem('calendarCategories', JSON.stringify(data.categories));
+          events = data.events;
+          categories = data.categories;
+          renderCalendar(currentDate);
+          alert('Data restored successfully!');
+        } catch (error) {
+          alert('Error restoring data: ' + error.message);
+        }
+      };
+      reader.readAsText(file);
+    };
+    
+    input.click();
+  });
+
+  // Rest of the existing code remains unchanged...
   const getRandomColor = () => {
     const letters = '0123456789ABCDEF';
     let color = '#';
@@ -119,6 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  // Rest of the existing event handling and modal code remains unchanged...
   const showDayEvents = (date) => {
     currentDay = date;
     dayEventsList.innerHTML = '';
@@ -240,11 +303,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Close modals when clicking outside
   window.addEventListener('click', (e) => {
-    if (e.target === dayEventsModal || 
+    if (e.target === settingsModal || 
+        e.target === dayEventsModal || 
         e.target === eventDetailsModal || 
         e.target === eventEditModal || 
         e.target === newEventModal || 
         e.target === categoryModal) {
+      settingsModal.style.display = 'none';
       dayEventsModal.style.display = 'none';
       eventDetailsModal.style.display = 'none';
       eventEditModal.style.display = 'none';
@@ -255,6 +320,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.querySelectorAll('.close').forEach(closeBtn => {
     closeBtn.addEventListener('click', () => {
+      settingsModal.style.display = 'none';
       dayEventsModal.style.display = 'none';
       eventDetailsModal.style.display = 'none';
       eventEditModal.style.display = 'none';
