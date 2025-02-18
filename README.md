@@ -28,7 +28,7 @@ You can always backup and restore your data anytime you want.
 ## Demo
 
 Check out a live demo of the calendar here:  
-[Simple Event Calendar Demo](https://github.com/lolilaifu/lolilaifu.simpleeventcalendar)
+[Simple Event Calendar Demo](https://lolilaifu.github.io/lolilaifu.simpleeventcalendar/)
 
 ## Installation
 
