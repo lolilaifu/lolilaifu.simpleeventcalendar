@@ -22,6 +22,9 @@ The calendar automatically highlights the current day, so you never lose track o
 🌑 **Black and White Theme**  
 Enjoy a modern and sleek black-and-white theme that ensures your focus stays on the events themselves.  
 
+🗃️ **Backup your data**
+You can always backup and restore your data anytime you want.
+
 ## Demo
 
 Check out a live demo of the calendar here:  
