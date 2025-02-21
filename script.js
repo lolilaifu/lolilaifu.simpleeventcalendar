@@ -29,6 +29,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const newEventForm = document.getElementById('new-event-form');
   const categoryForm = document.getElementById('category-form');
   
+  // Edit Form Elements
+  const editEventTitle = document.getElementById('edit-event-title');
+  const editEventDate = document.getElementById('edit-event-date');
+  const editEventCategory = document.getElementById('edit-event-category');
+  const editEventDescription = document.getElementById('edit-event-description');
+  
   let currentDate = new Date();
   let events = JSON.parse(localStorage.getItem('calendarEvents')) || {};
   let categories = JSON.parse(localStorage.getItem('calendarCategories')) || {
