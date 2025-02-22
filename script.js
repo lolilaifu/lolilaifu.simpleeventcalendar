@@ -315,6 +315,10 @@ document.addEventListener('DOMContentLoaded', () => {
         e.target === eventEditModal || 
         e.target === newEventModal || 
         e.target === categoryModal) {
+      // Don't close settings modal if clicking dark mode toggle
+      if (e.target === settingsModal && e.target.closest('#dark-mode-toggle')) {
+        return;
+      }
       settingsModal.style.display = 'none';
       dayEventsModal.style.display = 'none';
       eventDetailsModal.style.display = 'none';
