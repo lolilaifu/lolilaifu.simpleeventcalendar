@@ -25,6 +25,9 @@ Enjoy a modern and sleek black-and-white theme that ensures your focus stays on 
 🗃️ **Backup your data**
 You can always backup and restore your data anytime you want.
 
+📝 **Backup your data**
+You can take notes and make plans.
+
 ## Demo
 
 Check out a live demo of the calendar here:  
