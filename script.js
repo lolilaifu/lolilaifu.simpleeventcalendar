@@ -314,7 +314,8 @@ document.addEventListener('DOMContentLoaded', () => {
         e.target === eventDetailsModal || 
         e.target === eventEditModal || 
         e.target === newEventModal || 
-        e.target === categoryModal) {
+        e.target === categoryModal ||
+        e.target === notesModal) {
       // Don't close settings modal if clicking dark mode toggle
       if (e.target === settingsModal && e.target.closest('#dark-mode-toggle')) {
         return;
@@ -325,6 +326,7 @@ document.addEventListener('DOMContentLoaded', () => {
       eventEditModal.style.display = 'none';
       newEventModal.style.display = 'none';
       categoryModal.style.display = 'none';
+      notesModal.style.display = 'none';
     }
   });
 
@@ -336,6 +338,7 @@ document.addEventListener('DOMContentLoaded', () => {
       eventEditModal.style.display = 'none';
       newEventModal.style.display = 'none';
       categoryModal.style.display = 'none';
+      notesModal.style.display = 'none';
     });
   });
 
@@ -343,6 +346,137 @@ document.addEventListener('DOMContentLoaded', () => {
   const savedTheme = localStorage.getItem('calendarTheme') || 'light';
   document.body.setAttribute('data-theme', savedTheme);
   renderCalendar(currentDate);
+
+  // Notes functionality
+  const notesButton = document.getElementById('notes-button');
+  const notesModal = document.getElementById('notes-modal');
+  const notesList = document.getElementById('notes-list');
+  const noteEditModal = document.getElementById('note-edit-modal');
+  const noteEditForm = document.getElementById('note-edit-form');
+  const addNewNoteButton = document.getElementById('add-new-note');
+  
+  let notes = JSON.parse(localStorage.getItem('calendarNotes')) || [];
+  let currentNote = null;
+  let currentPage = 0;
+  const notesPerPage = 3;
+
+  // Load notes when modal opens
+  notesButton.addEventListener('click', () => {
+    renderNotesList();
+    notesModal.style.display = 'block';
+  });
+
+  // Add new note button
+  addNewNoteButton.addEventListener('click', () => {
+    currentNote = null;
+    noteEditForm.reset();
+    noteEditModal.style.display = 'block';
+  });
+
+  // Save note handler
+  noteEditForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const note = {
+      title: document.getElementById('note-title').value,
+      content: document.getElementById('note-content').value,
+      timestamp: new Date().toISOString()
+    };
+
+    if (currentNote !== null) {
+      // Update existing note
+      notes[currentNote] = note;
+    } else {
+      // Add new note
+      notes.push(note);
+    }
+
+    localStorage.setItem('calendarNotes', JSON.stringify(notes));
+    renderNotesList();
+    noteEditModal.style.display = 'none';
+  });
+
+  // Render notes list
+  function renderNotesList() {
+    notesList.innerHTML = '';
+    
+    // Calculate pagination
+    const startIndex = currentPage * notesPerPage;
+    const endIndex = startIndex + notesPerPage;
+    const paginatedNotes = notes.slice(startIndex, endIndex);
+    
+    // Add pagination controls
+    const paginationControls = document.createElement('div');
+    paginationControls.classList.add('pagination-controls');
+    
+    const prevButton = document.createElement('button');
+    prevButton.textContent = 'Previous';
+    prevButton.disabled = currentPage === 0;
+    prevButton.addEventListener('click', () => {
+      currentPage--;
+      renderNotesList();
+    });
+    
+    const nextButton = document.createElement('button');
+    nextButton.textContent = 'Next';
+    nextButton.disabled = endIndex >= notes.length;
+    nextButton.addEventListener('click', () => {
+      currentPage++;
+      renderNotesList();
+    });
+    
+    const pageInfo = document.createElement('span');
+    pageInfo.textContent = `Page ${currentPage + 1} of ${Math.ceil(notes.length / notesPerPage)}`;
+    
+    paginationControls.appendChild(prevButton);
+    paginationControls.appendChild(pageInfo);
+    paginationControls.appendChild(nextButton);
+    notesList.appendChild(paginationControls);
+    
+    // Render notes
+    paginatedNotes.forEach((note, index) => {
+      const actualIndex = startIndex + index;
+      const noteElement = document.createElement('div');
+      noteElement.classList.add('note-item');
+      noteElement.innerHTML = `
+        <div class="note-title">${note.title}</div>
+        <div class="note-content">${note.content}</div>
+      `;
+      
+      noteElement.addEventListener('click', () => {
+        currentNote = actualIndex;
+        document.getElementById('note-title').value = note.title;
+        document.getElementById('note-content').value = note.content;
+        noteEditModal.style.display = 'block';
+      });
+
+      // Add delete button
+      const deleteButton = document.createElement('button');
+      deleteButton.textContent = 'Delete';
+      deleteButton.classList.add('delete-note');
+      deleteButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (confirm('Are you sure you want to delete this note?')) {
+          notes.splice(index, 1);
+          localStorage.setItem('calendarNotes', JSON.stringify(notes));
+          renderNotesList();
+        }
+      });
+
+      noteElement.appendChild(deleteButton);
+      notesList.appendChild(noteElement);
+    });
+  }
+
+  // Cancel note edit
+  document.getElementById('cancel-note-edit').addEventListener('click', () => {
+    noteEditModal.style.display = 'none';
+  });
+
+  // Exit notes button
+  document.getElementById('exit-notes').addEventListener('click', () => {
+    notesModal.style.display = 'none';
+  });
 
   // Navigation
   prevMonthButton.addEventListener('click', () => {

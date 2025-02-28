@@ -14,6 +14,7 @@
       <h1 id="current-month"></h1>
       <div class="header-right">
         <button id="next-month">Next ></button>
+        <button id="notes-button" class="notes-button">📝 Notes</button>
         <button id="settings-button" class="settings-button">⚙️</button>
       </div>
     </div>
@@ -29,6 +30,7 @@
     <div class="calendar-grid" id="calendar-grid">
       <!-- Calendar days will be dynamically generated here -->
     </div>
+    
   </div>
 
   <!-- Settings Modal -->
@@ -130,6 +132,41 @@
         <input type="text" id="category-name" required>
         
         <button type="submit">Create Category</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Notes Modal -->
+  <div class="modal" id="notes-modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Notes</h2>
+      <div class="notes-container">
+        <div class="notes-list" id="notes-list"></div>
+      <div class="notes-actions">
+          <button id="add-new-note">+ New Note</button>
+          <button id="exit-notes" class="exit-notes-btn">Exit Notes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Note Edit Modal -->
+  <div class="modal" id="note-edit-modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2 id="note-edit-title">Edit Note</h2>
+      <form id="note-edit-form">
+        <label for="note-title">Title:</label>
+        <input type="text" id="note-title" required>
+        
+        <label for="note-content">Content:</label>
+        <textarea id="note-content" rows="10"></textarea>
+        
+        <div class="form-buttons">
+          <button type="submit">Save</button>
+          <button type="button" id="cancel-note-edit">Cancel</button>
+        </div>
       </form>
     </div>
   </div>
