@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const editEventDescription = document.getElementById('edit-event-description');
   
   let currentDate = new Date();
+  let weekStart = localStorage.getItem('calendarWeekStart') || '0'; // 0=Sunday, 1=Monday
   let events = JSON.parse(localStorage.getItem('calendarEvents')) || {};
   let categories = JSON.parse(localStorage.getItem('calendarCategories')) || {
     work: 'var(--category-work)',
@@ -47,6 +48,37 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentEvent = null;
 
   // Settings functionality
+  const weekStartSelect = document.getElementById('week-start-select');
+  weekStartSelect.value = weekStart;
+  
+  function updateDayHeaders() {
+    const dayHeaders = document.querySelectorAll('.calendar-days > div');
+    if (weekStart === '1') { // Monday
+      dayHeaders[0].textContent = 'Mon';
+      dayHeaders[1].textContent = 'Tue';
+      dayHeaders[2].textContent = 'Wed';
+      dayHeaders[3].textContent = 'Thu';
+      dayHeaders[4].textContent = 'Fri';
+      dayHeaders[5].textContent = 'Sat';
+      dayHeaders[6].textContent = 'Sun';
+    } else { // Sunday
+      dayHeaders[0].textContent = 'Sun';
+      dayHeaders[1].textContent = 'Mon';
+      dayHeaders[2].textContent = 'Tue';
+      dayHeaders[3].textContent = 'Wed';
+      dayHeaders[4].textContent = 'Thu';
+      dayHeaders[5].textContent = 'Fri';
+      dayHeaders[6].textContent = 'Sat';
+    }
+  }
+
+  weekStartSelect.addEventListener('change', () => {
+    weekStart = weekStartSelect.value;
+    localStorage.setItem('calendarWeekStart', weekStart);
+    updateDayHeaders();
+    renderCalendar(currentDate);
+  });
+
   settingsButton.addEventListener('click', () => {
     settingsModal.style.display = 'block';
   });
@@ -144,7 +176,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const firstDay = new Date(year, month, 1);
     const lastDay = new Date(year, month + 1, 0);
     const daysInMonth = lastDay.getDate();
-    const startDay = firstDay.getDay();
+    let startDay = firstDay.getDay();
+    
+    // Adjust start day based on week start preference
+    if (weekStart === '1') { // Monday
+      startDay = startDay === 0 ? 6 : startDay - 1;
+    }
 
     for (let i = 0; i < startDay; i++) {
       const emptyDay = document.createElement('div');
@@ -346,6 +383,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const savedTheme = localStorage.getItem('calendarTheme') || 'light';
   document.body.setAttribute('data-theme', savedTheme);
   renderCalendar(currentDate);
+  
+  // Update day headers on initialization
+  updateDayHeaders();
 
   // Notes functionality
   const notesButton = document.getElementById('notes-button');
