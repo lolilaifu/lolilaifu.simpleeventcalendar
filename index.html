@@ -168,7 +168,14 @@
         <input type="text" id="note-title" required>
         
         <label for="note-content">Content:</label>
-        <textarea id="note-content" rows="10"></textarea>
+        <div class="formatting-toolbar">
+          <button type="button" class="format-btn" data-command="bold" title="Bold">B</button>
+          <button type="button" class="format-btn" data-command="italic" title="Italic">I</button>
+          <button type="button" class="format-btn" data-command="underline" title="Underline">U</button>
+          <button type="button" class="format-btn" data-command="insertUnorderedList" title="Bullet List">•</button>
+          <button type="button" class="format-btn" data-command="insertOrderedList" title="Numbered List">1.</button>
+        </div>
+        <div id="note-content" class="rich-text-editor" contenteditable="true"></div>
         
         <div class="form-buttons">
           <button type="submit">Save</button>

@@ -365,3 +365,91 @@ button:hover {
 .exit-notes-btn:hover {
   background-color: #475569;
 }
+
+/* Rich Text Editor Styles */
+.formatting-toolbar {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background-color: var(--background-color);
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.format-btn {
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: 0.25rem;
+  font-weight: 500;
+  color: var(--text-color);
+  transition: all 0.2s ease;
+}
+
+.format-btn:hover {
+  background-color: rgba(99, 102, 241, 0.1);
+}
+
+.format-btn.active {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.rich-text-editor {
+  border: 1px solid var(--border-color);
+  border-radius: 0 0 0.5rem 0.5rem;
+  padding: 1rem;
+  min-height: 200px;
+  outline: none;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.rich-text-editor:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+.rich-text-editor ul,
+.rich-text-editor ol {
+  padding-left: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+.rich-text-editor ul {
+  list-style-type: disc;
+}
+
+.rich-text-editor ol {
+  list-style-type: decimal;
+}
+
+.rich-text-editor b,
+.rich-text-editor strong {
+  font-weight: 600;
+}
+
+.rich-text-editor i,
+.rich-text-editor em {
+  font-style: italic;
+}
+
+.rich-text-editor u {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .formatting-toolbar {
+    flex-wrap: wrap;
+  }
+  
+  .format-btn {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .rich-text-editor {
+    min-height: 150px;
+  }
+}

@@ -395,6 +395,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const noteEditForm = document.getElementById('note-edit-form');
   const addNewNoteButton = document.getElementById('add-new-note');
   
+  // Add rich text formatting functionality
+  document.querySelectorAll('.format-btn').forEach(button => {
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      const command = button.dataset.command;
+      document.execCommand(command, false, null);
+      
+      // Update button active state
+      document.querySelectorAll('.format-btn').forEach(btn => btn.classList.remove('active'));
+      if (document.queryCommandState(command)) {
+        button.classList.add('active');
+      }
+    });
+  });
+  
   let notes = JSON.parse(localStorage.getItem('calendarNotes')) || [];
   let currentNote = null;
   let currentPage = 0;
